@@ -3,6 +3,8 @@ import re
 import hashlib
 import xml.etree.ElementTree as ET
 import concurrent.futures
+import math
+import numpy as np
 from urllib.parse import urlparse
 import joblib
 import requests
@@ -479,7 +481,7 @@ def get_explainable_ai_data(text):
         weights.sort(key=lambda x: abs(x["impact"]), reverse=True)
         top_features = weights[:7]
 
-        # 2. Multi-Classifier Comparison
+        # 2. Multi-Classifier Comparison & Consensus Calculation
         svm_score = float(svm_model.decision_function(feats)[0])
         svm_pred = "REAL" if svm_score > 0 else "FAKE"
 
@@ -488,32 +490,69 @@ def get_explainable_ai_data(text):
         lr_pred = "REAL" if lr_pred_raw == 1 else "FAKE"
 
         nb_pred_raw = int(naive_bayes_model.predict(feats)[0])
-        nb_prob_real = float(naive_bayes_model.predict_proba(feats)[0][1])
+        nb_prob_real_raw = float(naive_bayes_model.predict_proba(feats)[0][1])
         nb_pred = "REAL" if nb_pred_raw == 1 else "FAKE"
 
+        # Temperature-calibrated Naive Bayes probability to prevent collinear feature density explosion
+        nnz = max(1.0, float(feats.nnz))
+        T = max(1.0, np.sqrt(nnz))
+        log_probs = feats @ naive_bayes_model.feature_log_prob_.T + naive_bayes_model.class_log_prior_
+        diff = float(log_probs[0][1] - log_probs[0][0]) / T
+        cal_nb_prob = float(1.0 / (1.0 + np.exp(-diff)))
+        nb_conf = round(cal_nb_prob * 100 if nb_pred == "REAL" else (1.0 - cal_nb_prob) * 100, 1)
+
+        votes = [svm_pred, lr_pred, nb_pred]
+        fake_votes = votes.count("FAKE")
+        real_votes = votes.count("REAL")
+        consensus_verdict = "FAKE" if fake_votes >= 2 else "REAL"
+        agreement_pct = round((max(fake_votes, real_votes) / 3) * 100)
+
         comparison = {
+            "consensus": {
+                "verdict": consensus_verdict,
+                "fake_votes": fake_votes,
+                "real_votes": real_votes,
+                "agreement_pct": agreement_pct,
+                "pill_label": f"{max(fake_votes, real_votes)} of 3 Consensus: {consensus_verdict}",
+                "title": f"Ensemble Consensus: {max(fake_votes, real_votes)} of 3 Models Agreed on {consensus_verdict}",
+                "description": (
+                    f"Linear SVM (99.63%) and Logistic Regression (99.28%) formed the decisive consensus on {consensus_verdict}, outvoting the baseline Multinomial Naive Bayes."
+                    if max(fake_votes, real_votes) == 2 and nb_pred != consensus_verdict
+                    else f"All 3 independent model architectures reached unanimous agreement on {consensus_verdict}."
+                    if max(fake_votes, real_votes) == 3
+                    else f"The majority consensus across the trained architectures confirmed {consensus_verdict}."
+                )
+            },
             "svm": {
                 "name": "Linear SVM",
                 "prediction": svm_pred,
                 "confidence": round(min(abs(svm_score) * 40 + 50, 99.8), 1),
-                "margin_score": round(svm_score, 3)
+                "margin_score": round(svm_score, 3),
+                "is_consensus": svm_pred == consensus_verdict,
+                "status": "Majority Consensus" if svm_pred == consensus_verdict else "Dissenting (Outvoted)"
             },
             "logistic_regression": {
                 "name": "Logistic Regression",
                 "prediction": lr_pred,
                 "confidence": round(lr_prob_real * 100 if lr_pred == "REAL" else (1 - lr_prob_real) * 100, 1),
-                "real_probability": round(lr_prob_real, 3)
+                "real_probability": round(lr_prob_real, 3),
+                "is_consensus": lr_pred == consensus_verdict,
+                "status": "Majority Consensus" if lr_pred == consensus_verdict else "Dissenting (Outvoted)"
             },
             "naive_bayes": {
-                "name": "Naive Bayes",
+                "name": "Multinomial Naive Bayes",
                 "prediction": nb_pred,
-                "confidence": round(nb_prob_real * 100 if nb_pred == "REAL" else (1 - nb_prob_real) * 100, 1),
-                "real_probability": round(nb_prob_real, 3)
+                "confidence": nb_conf,
+                "real_probability": round(cal_nb_prob, 3),
+                "is_consensus": nb_pred == consensus_verdict,
+                "status": "Majority Consensus" if nb_pred == consensus_verdict else "Dissenting (Outvoted 2-to-1)"
             }
         }
 
         return {
             "features": top_features,
+            "net_score": round(svm_score, 3),
+            "intercept": round(float(svm_model.intercept_[0]), 3),
             "comparison": comparison
         }
     except Exception as e:

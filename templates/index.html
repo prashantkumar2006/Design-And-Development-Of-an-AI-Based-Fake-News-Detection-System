@@ -283,22 +283,46 @@
             <!-- CLASSIFIER COMPARISON -->
             <div id="comparison-block" class="comparison-container" style="display:none;">
               <div class="comparison-header">
-                <h4>CLASSIFIER COMPARISON BENCHMARK</h4>
-                <span class="comparison-subtitle">Predictions across all 3 trained architecture baselines</span>
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+                  <div>
+                    <h4>CLASSIFIER COMPARISON BENCHMARK</h4>
+                    <span class="comparison-subtitle">Predictions across all 3 trained architecture baselines</span>
+                  </div>
+                  <div id="comp-consensus-pill" class="consensus-pill">2 of 3 Consensus: FAKE</div>
+                </div>
               </div>
+
+              <!-- ENSEMBLE CONSENSUS EXPLANATION BAR -->
+              <div id="comp-consensus-bar" class="consensus-banner">
+                <div class="consensus-banner-icon" id="comp-consensus-icon">⚖️</div>
+                <div class="consensus-banner-body">
+                  <strong id="comp-consensus-title">Ensemble Consensus: 2 of 3 Models Agreed on FAKE</strong>
+                  <p id="comp-consensus-desc">Linear SVM (99.63%) and Logistic Regression (99.28%) formed the decisive consensus on FAKE, outvoting the baseline Multinomial Naive Bayes.</p>
+                </div>
+              </div>
+
               <div class="classifier-cards-grid">
                 <div class="c-card" id="card-svm">
-                  <span class="c-name">Linear SVM</span>
+                  <div class="c-card-meta">
+                    <span class="c-name">Linear SVM (99.63%)</span>
+                    <span class="c-tag tag-consensus" id="comp-svm-tag">✓ Consensus</span>
+                  </div>
                   <strong class="c-pred" id="comp-svm-pred">—</strong>
-                  <small class="c-conf" id="comp-svm-conf">Confidence: —</small>
+                  <small class="c-conf" id="comp-svm-conf">Margin score: —</small>
                 </div>
                 <div class="c-card" id="card-lr">
-                  <span class="c-name">Logistic Regression</span>
+                  <div class="c-card-meta">
+                    <span class="c-name">Logistic Regression (99.28%)</span>
+                    <span class="c-tag tag-consensus" id="comp-lr-tag">✓ Consensus</span>
+                  </div>
                   <strong class="c-pred" id="comp-lr-pred">—</strong>
                   <small class="c-conf" id="comp-lr-conf">Confidence: —</small>
                 </div>
                 <div class="c-card" id="card-nb">
-                  <span class="c-name">Multinomial Naive Bayes</span>
+                  <div class="c-card-meta">
+                    <span class="c-name">Multinomial Naive Bayes (94.63%)</span>
+                    <span class="c-tag tag-dissenting" id="comp-nb-tag">⚠️ Outvoted</span>
+                  </div>
                   <strong class="c-pred" id="comp-nb-pred">—</strong>
                   <small class="c-conf" id="comp-nb-conf">Confidence: —</small>
                 </div>

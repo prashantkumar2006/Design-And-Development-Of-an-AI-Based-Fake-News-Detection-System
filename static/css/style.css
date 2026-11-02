@@ -472,7 +472,7 @@ h1 em,h2 em{color:var(--red);font-weight:600}
   border-radius: 2px;
 }
 .comparison-header {
-  margin-bottom: 14px;
+  margin-bottom: 12px;
 }
 .comparison-header h4 {
   font: 700 13px var(--mono);
@@ -483,6 +483,57 @@ h1 em,h2 em{color:var(--red);font-weight:600}
 .comparison-subtitle {
   font: 11px var(--sans);
   color: #7b736a;
+}
+.consensus-pill {
+  font: 700 10px var(--mono);
+  letter-spacing: 0.04em;
+  padding: 3px 8px;
+  border-radius: 2px;
+  text-transform: uppercase;
+}
+.consensus-pill.fake {
+  background: #fbe9e7;
+  color: #c62828;
+  border: 1px solid #ffccbc;
+}
+.consensus-pill.real {
+  background: #e8f5e9;
+  color: #2e7d32;
+  border: 1px solid #c8e6c9;
+}
+.consensus-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px 14px;
+  margin-bottom: 14px;
+  background: #fff;
+  border: 1px solid #ded6ca;
+  border-left: 4px solid #c62828;
+  border-radius: 2px;
+}
+.consensus-banner.real {
+  border-left-color: #2e7d32;
+  background: #fafffb;
+}
+.consensus-banner.fake {
+  border-left-color: #c62828;
+  background: #fffbfa;
+}
+.consensus-banner-icon {
+  font-size: 16px;
+  line-height: 1.2;
+}
+.consensus-banner-body strong {
+  display: block;
+  font: 700 12px var(--sans);
+  color: var(--ink);
+  margin-bottom: 2px;
+}
+.consensus-banner-body p {
+  font: 11px/1.4 var(--sans);
+  color: #5c554e;
+  margin: 0;
 }
 .classifier-cards-grid {
   display: grid;
@@ -497,10 +548,38 @@ h1 em,h2 em{color:var(--red);font-weight:600}
   display: flex;
   flex-direction: column;
   gap: 6px;
+  position: relative;
+  transition: transform 0.15s ease;
+}
+.c-card.is-dissenting {
+  border: 1px dashed #d4a017;
+  background: #fffefb;
+}
+.c-card-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 4px;
 }
 .c-name {
   font: 10px var(--mono);
   color: #7b736a;
+}
+.c-tag {
+  font: 700 8.5px var(--mono);
+  padding: 2px 5px;
+  border-radius: 2px;
+  text-transform: uppercase;
+}
+.c-tag.tag-consensus {
+  background: #e8f5e9;
+  color: #2e7d32;
+  border: 1px solid #c8e6c9;
+}
+.c-tag.tag-dissenting {
+  background: #fff8e1;
+  color: #b78103;
+  border: 1px solid #ffe082;
 }
 .c-pred {
   font: 700 18px var(--serif);
@@ -510,6 +589,9 @@ h1 em,h2 em{color:var(--red);font-weight:600}
 }
 .c-pred.fake {
   color: #c62828;
+}
+.c-pred.dissenting {
+  opacity: 0.85;
 }
 .c-conf {
   font: 11px var(--mono);

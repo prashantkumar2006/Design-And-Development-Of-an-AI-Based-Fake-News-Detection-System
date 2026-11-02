@@ -53,6 +53,16 @@ const compLrPred = document.querySelector('#comp-lr-pred');
 const compLrConf = document.querySelector('#comp-lr-conf');
 const compNbPred = document.querySelector('#comp-nb-pred');
 const compNbConf = document.querySelector('#comp-nb-conf');
+const compConsensusPill = document.querySelector('#comp-consensus-pill');
+const compConsensusBar = document.querySelector('#comp-consensus-bar');
+const compConsensusTitle = document.querySelector('#comp-consensus-title');
+const compConsensusDesc = document.querySelector('#comp-consensus-desc');
+const compSvmTag = document.querySelector('#comp-svm-tag');
+const compLrTag = document.querySelector('#comp-lr-tag');
+const compNbTag = document.querySelector('#comp-nb-tag');
+const cardSvm = document.querySelector('#card-svm');
+const cardLr = document.querySelector('#card-lr');
+const cardNb = document.querySelector('#card-nb');
 
 let currentXaiFeatures = [];
 let currentRawArticle = '';
@@ -620,24 +630,72 @@ form?.addEventListener('submit', async e => {
             xaiBlock.style.display = 'none';
         }
 
-        // Render Multi-Classifier Comparison Benchmark
+        // Render Multi-Classifier Comparison Benchmark with Ensemble Consensus
         if (data.explainable_ai && data.explainable_ai.comparison && comparisonBlock) {
             const comp = data.explainable_ai.comparison;
+
+            // Render Consensus Bar & Pill
+            if (comp.consensus) {
+                if (compConsensusPill) {
+                    compConsensusPill.textContent = comp.consensus.pill_label || `${comp.consensus.agreement_pct}% Consensus: ${comp.consensus.verdict}`;
+                    compConsensusPill.className = `consensus-pill ${comp.consensus.verdict.toLowerCase()}`;
+                }
+                if (compConsensusTitle) {
+                    compConsensusTitle.textContent = comp.consensus.title || `Ensemble Consensus: ${comp.consensus.verdict}`;
+                }
+                if (compConsensusDesc) {
+                    compConsensusDesc.textContent = comp.consensus.description || '';
+                }
+                if (compConsensusBar) {
+                    compConsensusBar.className = `consensus-banner ${comp.consensus.verdict.toLowerCase()}`;
+                    compConsensusBar.style.display = 'flex';
+                }
+            }
+
+            // SVM Card
             if (comp.svm && compSvmPred) {
                 compSvmPred.textContent = comp.svm.prediction;
-                compSvmPred.className = `c-pred ${comp.svm.prediction.toLowerCase()}`;
+                compSvmPred.className = `c-pred ${comp.svm.prediction.toLowerCase()} ${comp.svm.is_consensus ? 'consensus' : 'dissenting'}`;
                 compSvmConf.textContent = `Margin score: ${comp.svm.margin_score}`;
+                if (compSvmTag) {
+                    compSvmTag.textContent = comp.svm.is_consensus ? '✓ Majority Consensus' : '⚠️ Dissenting';
+                    compSvmTag.className = `c-tag ${comp.svm.is_consensus ? 'tag-consensus' : 'tag-dissenting'}`;
+                }
+                if (cardSvm) {
+                    cardSvm.className = `c-card ${comp.svm.is_consensus ? 'is-consensus' : 'is-dissenting'}`;
+                }
             }
+
+            // Logistic Regression Card
             if (comp.logistic_regression && compLrPred) {
                 compLrPred.textContent = comp.logistic_regression.prediction;
-                compLrPred.className = `c-pred ${comp.logistic_regression.prediction.toLowerCase()}`;
+                compLrPred.className = `c-pred ${comp.logistic_regression.prediction.toLowerCase()} ${comp.logistic_regression.is_consensus ? 'consensus' : 'dissenting'}`;
                 compLrConf.textContent = `Confidence: ${comp.logistic_regression.confidence}%`;
+                if (compLrTag) {
+                    compLrTag.textContent = comp.logistic_regression.is_consensus ? '✓ Majority Consensus' : '⚠️ Dissenting';
+                    compLrTag.className = `c-tag ${comp.logistic_regression.is_consensus ? 'tag-consensus' : 'tag-dissenting'}`;
+                }
+                if (cardLr) {
+                    cardLr.className = `c-card ${comp.logistic_regression.is_consensus ? 'is-consensus' : 'is-dissenting'}`;
+                }
             }
+
+            // Naive Bayes Card
             if (comp.naive_bayes && compNbPred) {
                 compNbPred.textContent = comp.naive_bayes.prediction;
-                compNbPred.className = `c-pred ${comp.naive_bayes.prediction.toLowerCase()}`;
-                compNbConf.textContent = `Confidence: ${comp.naive_bayes.confidence}%`;
+                compNbPred.className = `c-pred ${comp.naive_bayes.prediction.toLowerCase()} ${comp.naive_bayes.is_consensus ? 'consensus' : 'dissenting'}`;
+                compNbConf.textContent = comp.naive_bayes.is_consensus
+                    ? `Confidence: ${comp.naive_bayes.confidence}%`
+                    : `Confidence: ${comp.naive_bayes.confidence}% (Outvoted 2-to-1)`;
+                if (compNbTag) {
+                    compNbTag.textContent = comp.naive_bayes.is_consensus ? '✓ Majority Consensus' : '⚠️ Outvoted (Minority)';
+                    compNbTag.className = `c-tag ${comp.naive_bayes.is_consensus ? 'tag-consensus' : 'tag-dissenting'}`;
+                }
+                if (cardNb) {
+                    cardNb.className = `c-card ${comp.naive_bayes.is_consensus ? 'is-consensus' : 'is-dissenting'}`;
+                }
             }
+
             comparisonBlock.style.display = 'block';
         } else if (comparisonBlock) {
             comparisonBlock.style.display = 'none';
