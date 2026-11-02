@@ -27,6 +27,7 @@ test_suite = [
     ("Celebrity Hoax: Secret cloning", "SHOCKING PROOF: Government scientists have replaced Hollywood celebrities with synthetic human clones!", False),
     ("Sensational Clickbait: Magic water", "YOU WON'T BELIEVE THIS: Secret miracle water reverses aging instantly! Doctors are furious! 100% proof!", False),
     ("Viral Hoax: Microchips in vaccines", "Leaked documents prove secret tracking microchips were implanted in vaccines to monitor citizens worldwide", False),
+    ("Celebrity Death Hoax: Actor Overdose", "Indian bollywood actor Varun dhawan died today by drug overdose", False),
 ]
 
 def run_tests():
