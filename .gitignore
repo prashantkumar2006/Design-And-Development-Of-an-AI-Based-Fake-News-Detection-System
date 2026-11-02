@@ -4,19 +4,17 @@ __pycache__/
 .venv/
 venv/
 env/
+.env
+.streamlit/secrets.toml
 
 # Jupyter
 .ipynb_checkpoints/
 
-# Large datasets
-data/*.csv
-
-# Trained models
-models/*.pkl
-models/*.joblib
-models/*.h5
-models/*.pt
-models/*.pth
+# Large datasets & raw matrices (> 15 MB)
+data/
+models/X_*.pkl
+models/titles_*.pkl
+models/y_*.pkl
 
 # macOS
 .DS_Store

@@ -1,0 +1,548 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f3eee5">
+  <title>TruthLens — AI Fake News Detection & Real-Time Verification Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500;700&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+  <div class="datebar">
+    <span>THE NEWS. EXAMINED.</span>
+    <span>TRUTHLENS AI VERIFICATION PLATFORM</span>
+    <span>REAL-TIME HYBRID INTELLIGENCE & EXPLAINABLE AI</span>
+  </div>
+  <header class="header">
+    <a class="brand" href="#home">Truth<span>Lens</span></a>
+    <button class="menu-toggle" aria-label="Open navigation" aria-expanded="false">☰</button>
+    <nav id="nav">
+      <a href="#home">HOME</a>
+      <a href="#interactive-how">HOW IT WORKS</a>
+      <a href="#demo">ANALYZE</a>
+      <a href="#batch">BATCH TESTING</a>
+      <a href="#dashboard">PERFORMANCE</a>
+      <a href="#history-section">HISTORY</a>
+    </nav>
+  </header>
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-top">
+        <span class="kicker"><i></i> HYBRID AI NEWS TEXT ANALYSIS & LIVE CORROBORATION</span>
+        <span class="issue">PRODUCTION DEPLOYMENT / 2026</span>
+      </div>
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <p class="overline">PAUSE BEFORE YOU SHARE</p>
+          <h1>Look closer.<br>Think <em>clearer.</em></h1>
+          <p class="intro">In an era of rapid information diffusion, surface text patterns are not enough. TruthLens
+            integrates real-time web consensus, Wikipedia knowledge graphs, and multi-model machine learning with
+            Explainable AI (XAI) feature attributions.</p>
+          <div class="actions">
+            <a class="btn red" href="#demo">ANALYZE STORY <span>↘</span></a>
+            <a class="btn" style="background:#2b2621;color:#fff;" href="#batch">BATCH TEST <span>↘</span></a>
+            <a class="underlink" href="#interactive-how">EXPLORE PIPELINE ↗</a>
+          </div>
+          <div class="hero-stat">
+            <div><strong>99.6%</strong><span>LINEAR SVM ACCURACY</span></div>
+            <div><strong>03</strong><span>ENSEMBLE CLASSIFIERS</span></div>
+            <div><strong>XAI</strong><span>EXPLAINABLE ATTRIBUTIONS</span></div>
+          </div>
+        </div>
+        <div class="cover-wrap">
+          <div class="cover-label">TRUTHLENS<br><span>SYSTEM REPORT / 001</span></div>
+          <div class="cover">
+            <div class="cover-top"><span>THE INFORMATION AGE</span><span>VOL. 01</span></div>
+            <div class="cover-line"></div>
+            <h2>WHAT<br>IS THE<br><em>STORY?</em></h2>
+            <div class="cover-image">
+              <div class="sun"></div>
+              <div class="horizon"></div>
+              <div class="signal s1"></div>
+              <div class="signal s2"></div>
+              <div class="signal s3"></div>
+            </div>
+            <div class="cover-bottom">
+              <span>READ BETWEEN THE LINES</span>
+              <span>TRUTH / CONTEXT / CARE</span>
+            </div>
+          </div>
+          <div class="red-stamp">VERIFY<br>BEFORE<br>AMPLIFY</div>
+          <p class="cover-caption">A closer look at the words<br>that shape what we believe.</p>
+        </div>
+      </div>
+      <div class="ticker">
+        <div>THE SIGNAL IS IN THE DETAILS <b>✦</b> READ CRITICALLY <b>✦</b> CHECK THE SOURCE <b>✦</b> EXPLAINABLE AI
+          ATTRIBUTIONS <b>✦</b> MULTI-MODEL ENSEMBLE <b>✦</b></div>
+      </div>
+    </section>
+
+    <!-- 1. INTERACTIVE "HOW TRUTHLENS WORKS" SECTION -->
+    <section class="intro-section reveal" id="interactive-how">
+      <div class="section-head">
+        <span>01 / INTERACTIVE ARCHITECTURE</span>
+        <span>STEP-BY-STEP VERIFICATION</span>
+      </div>
+      <div class="split">
+        <h2>Interactive <em>Pipeline.</em><br>Click each stage below.</h2>
+        <div>
+          <p class="lead">TruthLens separates factual validation from linguistic classification to eliminate blind
+            spots.</p>
+          <p>Click through the 4 interactive stages to see how an article moves from raw text to explainable
+            verification.</p>
+        </div>
+      </div>
+
+      <div class="interactive-steps-container">
+        <div class="step-nav" role="tablist">
+          <button class="step-tab active" data-step="1">
+            <span class="step-num">01</span>
+            <span class="step-label">Entity & Claim Extraction</span>
+          </button>
+          <button class="step-tab" data-step="2">
+            <span class="step-num">02</span>
+            <span class="step-label">Knowledge Base & News Check</span>
+          </button>
+          <button class="step-tab" data-step="3">
+            <span class="step-num">03</span>
+            <span class="step-label">Multi-Model Classification</span>
+          </button>
+          <button class="step-tab" data-step="4">
+            <span class="step-num">04</span>
+            <span class="step-label">Explainable AI (XAI)</span>
+          </button>
+        </div>
+
+        <div class="step-content-card" id="step-content">
+          <div class="step-badge" id="step-badge">STAGE 01 OF 04</div>
+          <h3 id="step-title">Stage 1: Entity & Predicate Normalization</h3>
+          <p id="step-desc">Raw input is cleaned of Unicode artifacts, format labels (e.g. "Headline:", "Breaking:"),
+            and non-breaking spaces. High-signal named entities, proper nouns (e.g. "Chandrayaan-3", "Moderna",
+            "Pfizer"), and action predicates are extracted to construct focused search queries.</p>
+          <div class="step-visual" id="step-visual">
+            <div class="code-box">
+              <code>Input: "Headline: India's Chandrayaan-3 Successfully Lands on the Moon..."<br>
+          ➔ Cleaned Query: <b>[Chandrayaan-3, Moon, Lands, Vikram, ISRO]</b></code>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. ANALYZE DEMO SECTION WITH EXPLAINABLE AI & CLASSIFIER COMPARISON -->
+    <section class="demo-section reveal" id="demo">
+      <div class="section-head">
+        <span>02 / ANALYZE STORY</span>
+        <span>DETAILED PREDICTION REPORT</span>
+      </div>
+      <div class="demo-grid">
+        <div class="demo-copy">
+          <p class="overline">INVESTIGATE WITH EVIDENCE</p>
+          <h2>Put a story<br>under the <em>lens.</em></h2>
+          <p>Paste any news headline or full article. TruthLens will cross-reference claims against verified sources,
+            compute Explainable AI token impacts, and benchmark all 3 classifiers.</p>
+          <div class="demo-note">
+            <span>✳</span>
+            <p><b>Explainable AI Feature:</b> View the exact mathematical weight of positive vs negative vocabulary
+              driving the model's decision.</p>
+          </div>
+          <div class="status">
+            <span class="status-dot"></span>
+            <span id="backend-status">Checking engine status…</span>
+          </div>
+        </div>
+
+        <form id="analyze-form" class="analyzer">
+          <div class="input-mode-tabs">
+            <button type="button" class="mode-tab active" id="tab-mode-text">📝 PASTE TEXT</button>
+            <button type="button" class="mode-tab" id="tab-mode-url">🔗 EXTRACT FROM ARTICLE URL</button>
+          </div>
+
+          <div id="url-input-block" class="url-input-block" style="display:none;">
+            <div class="url-input-wrap">
+              <input type="url" id="article-url-input" placeholder="Paste article URL (e.g. https://www.bbc.com/news/...)" class="url-field">
+              <button type="button" id="extract-url-btn" class="btn red">FETCH ARTICLE 📥</button>
+            </div>
+            <div id="url-status" class="url-status" style="display:none;"></div>
+          </div>
+
+          <div class="form-top">
+            <label for="news-text">NEWS ARTICLE / HEADLINE CONTENT</label>
+            <span id="char-count">0 / 30,000</span>
+          </div>
+
+          <div class="example-section">
+            <span class="example-label">TRY A QUICK SAMPLE:</span>
+            <div class="example-chips">
+              <button type="button" class="example-chip" data-example="chandrayaan">🚀 Chandrayaan-3</button>
+              <button type="button" class="example-chip" data-example="solar">☀️ Solar Power</button>
+              <button type="button" class="example-chip" data-example="mrna">🧬 mRNA Vaccine</button>
+              <button type="button" class="example-chip" data-example="battery">🔋 1-Year Battery Claim</button>
+              <button type="button" class="example-chip" data-example="cheese">🧀 Green Cheese Moon</button>
+            </div>
+          </div>
+
+          <textarea id="news-text" name="text" maxlength="30000" required
+            placeholder="Paste a headline or full article text here, or click one of the quick samples above…"></textarea>
+          <div class="form-bottom">
+            <span>ENGLISH TEXT · UP TO 30,000 CHARACTERS</span>
+            <button class="btn red" id="analyze-button" type="submit">ANALYZE STORY ↗</button>
+          </div>
+          <p id="form-error" class="error" hidden></p>
+
+          <!-- DETAILED PREDICTION REPORT -->
+          <section id="result-panel" class="result" aria-live="polite" hidden>
+            <div class="result-top">
+              <span>DETAILED PREDICTION REPORT</span>
+              <div style="display:flex; align-items:center; gap:8px;">
+                <button type="button" id="export-report-btn" class="export-btn" title="Export or print formal verification report">📄 EXPORT REPORT</button>
+                <span id="result-tag">ANALYSIS COMPLETE</span>
+              </div>
+            </div>
+            <h3 id="result-title">Prediction</h3>
+            <p id="result-description"></p>
+
+            <div class="result-meta">
+              <div><small>PRIMARY METHOD / MODEL</small><b id="result-model">—</b></div>
+              <div><small>SIGNAL CLASSIFICATION</small><b id="result-interpretation">Live Source Check</b></div>
+            </div>
+
+            <!-- Corroborating Sources Block -->
+            <div id="result-sources-block" class="sources-container" style="display:none;">
+              <small>CORROBORATING SOURCES & REFERENCES</small>
+              <ul id="result-sources-list"></ul>
+            </div>
+
+            <!-- LINGUISTIC CREDIBILITY & SENSATIONALISM RADAR -->
+            <div id="radar-block" class="radar-container" style="display:none;">
+              <div class="radar-header">
+                <h4>LINGUISTIC CREDIBILITY & SENSATIONALISM RADAR</h4>
+                <span class="radar-subtitle">Lexical objectivity, sensationalism risk, and readability analysis</span>
+              </div>
+              <div class="radar-grid">
+                <div class="radar-card" id="radar-sensationalism">
+                  <div class="radar-card-top">
+                    <span class="radar-card-title">Sensationalism Index</span>
+                    <b class="radar-card-badge" id="radar-sens-badge">Low</b>
+                  </div>
+                  <div class="radar-meter">
+                    <div class="radar-meter-fill" id="radar-sens-fill" style="width:12%;"></div>
+                  </div>
+                  <small id="radar-sens-desc">Score: 12% · Calm journalistic tone</small>
+                </div>
+
+                <div class="radar-card" id="radar-tone">
+                  <div class="radar-card-top">
+                    <span class="radar-card-title">Subjectivity & Tone</span>
+                    <b class="radar-card-badge neutral" id="radar-tone-badge">Neutral</b>
+                  </div>
+                  <p class="radar-card-detail" id="radar-tone-desc">Objective / Neutral Journalistic</p>
+                  <small id="radar-tone-pronouns">Pronoun density: Low</small>
+                </div>
+
+                <div class="radar-card" id="radar-urgency">
+                  <div class="radar-card-top">
+                    <span class="radar-card-title">Urgency & Typography</span>
+                    <b class="radar-card-badge neutral" id="radar-caps-badge">Normal</b>
+                  </div>
+                  <p class="radar-card-detail" id="radar-urgency-detail">0 all-caps words · 0 exclamation marks</p>
+                  <small>No viral urgency or clickbait punctuation</small>
+                </div>
+
+                <div class="radar-card" id="radar-readability">
+                  <div class="radar-card-top">
+                    <span class="radar-card-title">Readability & Complexity</span>
+                    <b class="radar-card-badge neutral" id="radar-read-badge">Standard</b>
+                  </div>
+                  <p class="radar-card-detail" id="radar-read-label">Standard Journalistic</p>
+                  <small id="radar-read-desc">News Wire Standard · Balanced syntax</small>
+                </div>
+              </div>
+            </div>
+
+            <!-- EXPLAINABLE AI: FEATURE ATTRIBUTIONS -->
+            <div id="xai-block" class="xai-container" style="display:none;">
+              <div class="xai-header">
+                <h4>EXPLAINABLE AI (XAI) — Why the Model Made This Decision</h4>
+                <span class="xai-subtitle">Feature impact scores (TF-IDF Weight × Linear SVM Coefficient)</span>
+              </div>
+              <div id="xai-bars" class="xai-bars-list"></div>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-top:14px;">
+                <button type="button" id="toggle-heatmap-btn" class="example-chip" style="margin:0;">🔍 Toggle In-Text XAI Heatmap</button>
+                <small style="font-size:10px; color:#7b736a; font-family:var(--mono);">Green: Credibility indicators | Red: Misleading indicators</small>
+              </div>
+              <div id="xai-heatmap-wrap" class="xai-heatmap-wrap" style="display:none;"></div>
+            </div>
+
+            <!-- CLASSIFIER COMPARISON -->
+            <div id="comparison-block" class="comparison-container" style="display:none;">
+              <div class="comparison-header">
+                <h4>CLASSIFIER COMPARISON BENCHMARK</h4>
+                <span class="comparison-subtitle">Predictions across all 3 trained architecture baselines</span>
+              </div>
+              <div class="classifier-cards-grid">
+                <div class="c-card" id="card-svm">
+                  <span class="c-name">Linear SVM</span>
+                  <strong class="c-pred" id="comp-svm-pred">—</strong>
+                  <small class="c-conf" id="comp-svm-conf">Confidence: —</small>
+                </div>
+                <div class="c-card" id="card-lr">
+                  <span class="c-name">Logistic Regression</span>
+                  <strong class="c-pred" id="comp-lr-pred">—</strong>
+                  <small class="c-conf" id="comp-lr-conf">Confidence: —</small>
+                </div>
+                <div class="c-card" id="card-nb">
+                  <span class="c-name">Multinomial Naive Bayes</span>
+                  <strong class="c-pred" id="comp-nb-pred">—</strong>
+                  <small class="c-conf" id="comp-nb-conf">Confidence: —</small>
+                </div>
+              </div>
+            </div>
+
+            <p id="result-note" class="result-note"></p>
+          </section>
+        </form>
+      </div>
+    </section>
+
+    <!-- 3. BATCH TESTING FEATURE -->
+    <section class="results-section reveal" id="batch">
+      <div class="section-head">
+        <span>03 / BATCH TESTING</span>
+        <span>MULTI-ARTICLE BULK VERIFICATION</span>
+      </div>
+      <div class="results-title">
+        <h2>Batch Testing <em>Engine.</em></h2>
+        <p>Test multiple articles or headlines simultaneously. Enter each article on a new line or separate by empty
+          lines to generate an aggregate credibility score and per-item report.</p>
+      </div>
+
+      <div class="batch-card">
+        <div class="batch-input-wrap">
+          <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+            <label for="batch-text" style="font:10px var(--mono); color:#7b736a;">ENTER ARTICLES (ONE PER LINE OR
+              BLOCK)</label>
+            <button type="button" id="load-batch-sample" class="example-chip">Load 4 Sample Articles</button>
+          </div>
+          <textarea id="batch-text" class="batch-textarea"
+            placeholder="Paste multiple articles here. Separate each story with an empty line...&#10;&#10;Article 1: India's Chandrayaan-3 Successfully Lands on the Moon...&#10;&#10;Article 2: NASA confirms moon is made of green cheese..."></textarea>
+          <div style="margin-top:12px; display:flex; justify-content:flex-end;">
+            <button type="button" id="batch-submit-btn" class="btn red">RUN BATCH ANALYSIS ↗</button>
+          </div>
+        </div>
+
+        <!-- BATCH REPORT CONTAINER -->
+        <div id="batch-results-wrap" class="batch-results-wrap" style="display:none;">
+          <div class="batch-summary-stats">
+            <div class="b-stat stat-total">
+              <span id="batch-total">0</span>
+              <small>TOTAL ANALYZED</small>
+            </div>
+            <div class="b-stat stat-real">
+              <span id="batch-real">0</span>
+              <small>VERIFIED REAL</small>
+            </div>
+            <div class="b-stat stat-fake">
+              <span id="batch-fake">0</span>
+              <small>FLAGGED FAKE</small>
+            </div>
+            <div class="b-stat stat-unverified">
+              <span id="batch-unverified">0</span>
+              <small>UNVERIFIED</small>
+            </div>
+            <div class="b-stat stat-score">
+              <span id="batch-score">0%</span>
+              <small>BATCH CREDIBILITY</small>
+            </div>
+          </div>
+
+          <div class="batch-table-wrap">
+            <table class="batch-table">
+              <thead>
+                <tr>
+                  <th style="width:50px;">#</th>
+                  <th>HEADLINE / SNIPPET</th>
+                  <th style="width:160px;">VERDICT</th>
+                  <th style="width:220px;">MODEL APPLIED</th>
+                </tr>
+              </thead>
+              <tbody id="batch-table-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. REAL-TIME MODEL PERFORMANCE DASHBOARD -->
+    <section class="results-section reveal" id="dashboard">
+      <div class="section-head">
+        <span>04 / PERFORMANCE DASHBOARD</span>
+        <span>REAL-TIME EVALUATION METRICS</span>
+      </div>
+      <div class="results-title">
+        <h2>Model Performance <em>Dashboard.</em></h2>
+        <p>Comparative benchmarks from 8,980 held-out stratified test articles across all three trained models.</p>
+      </div>
+
+      <div class="metric-row">
+        <div class="metric">
+          <span>PRIMARY MODEL</span>
+          <strong>Linear<br>SVM</strong>
+          <div class="bar-progress">
+            <div style="width:99.63%;"></div>
+          </div>
+          <small>Accuracy: 99.63% · F1: 0.9962</small>
+        </div>
+        <div class="metric">
+          <span>BASELINE 01</span>
+          <strong>Logistic<br>Regression</strong>
+          <div class="bar-progress">
+            <div style="width:99.28%;"></div>
+          </div>
+          <small>Accuracy: 99.28% · F1: 0.9926</small>
+        </div>
+        <div class="metric">
+          <span>BASELINE 02</span>
+          <strong>Multinomial<br>Naive Bayes</strong>
+          <div class="bar-progress">
+            <div style="width:94.63%;"></div>
+          </div>
+          <small>Accuracy: 94.63% · F1: 0.9443</small>
+        </div>
+      </div>
+
+      <div class="chart-grid">
+        <article class="chart-card">
+          <div class="chart-title">
+            <span>CONFUSION MATRIX</span>
+            <b>LINEAR SVM (CHAMPION)</b>
+          </div>
+          <div class="matrix">
+            <div class="cell dark">4,670<small>True Fake</small></div>
+            <div class="cell pale">27<small>False Real</small></div>
+            <div class="cell pale">6<small>False Fake</small></div>
+            <div class="cell mid">4,277<small>True Real</small></div>
+          </div>
+          <p>Precision: 99.37% · Recall: 99.86% · Highest margin separation.</p>
+        </article>
+
+        <article class="chart-card">
+          <div class="chart-title">
+            <span>CONFUSION MATRIX</span>
+            <b>LOGISTIC REGRESSION</b>
+          </div>
+          <div class="matrix">
+            <div class="cell dark">4,651<small>True Fake</small></div>
+            <div class="cell pale">46<small>False Real</small></div>
+            <div class="cell pale">18<small>False Fake</small></div>
+            <div class="cell mid">4,265<small>True Real</small></div>
+          </div>
+          <p>L2 Regularized linear model with probability calibration.</p>
+        </article>
+
+        <article class="chart-card">
+          <div class="chart-title">
+            <span>CONFUSION MATRIX</span>
+            <b>NAIVE BAYES</b>
+          </div>
+          <div class="matrix">
+            <div class="cell dark">4,450<small>True Fake</small></div>
+            <div class="cell pale">245<small>False Real</small></div>
+            <div class="cell pale">232<small>False Fake</small></div>
+            <div class="cell mid">4,051<small>True Real</small></div>
+          </div>
+          <p>Multinomial probabilistic frequency baseline.</p>
+        </article>
+
+        <article class="chart-card frequency">
+          <div class="chart-title">
+            <span>TOP TF-IDF WEIGHTS</span>
+            <b>INFORMATIVE TOKENS</b>
+          </div>
+          <div class="bars">
+            <div><span>reuters</span><i style="--w:100%"></i></div>
+            <div><span>washington</span><i style="--w:84%"></i></div>
+            <div><span>officials</span><i style="--w:62%"></i></div>
+            <div><span>spokesman</span><i style="--w:48%"></i></div>
+            <div><span>unverified</span><i style="--w:38%"></i></div>
+            <div><span>sources</span><i style="--w:29%"></i></div>
+            <div><span>reports</span><i style="--w:22%"></i></div>
+          </div>
+          <p>Features with strongest separating power across classes.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- 5. ANALYSIS HISTORY SECTION -->
+    <section class="results-section reveal" id="history-section" style="background:#f4efe6;">
+      <div class="section-head">
+        <span>05 / AUDIT LOG</span>
+        <span>ANALYSIS HISTORY</span>
+      </div>
+      <div class="results-title">
+        <h2>Analysis <em>History.</em></h2>
+        <div style="display:flex; align-items:center; gap:14px;">
+          <p style="margin:0;">Recent stories evaluated in this session.</p>
+          <button type="button" id="clear-history-btn" class="example-chip" style="margin:0;">Clear History</button>
+        </div>
+      </div>
+
+      <div class="history-card">
+        <div id="history-empty"
+          style="padding:24px; text-align:center; color:#7b736a; font-family:var(--mono); font-size:12px;">
+          No articles analyzed yet in this session. Analyze an article above to build your history log.
+        </div>
+        <div class="history-list" id="history-list" style="display:none;"></div>
+      </div>
+    </section>
+
+    <!-- 6. THE TOOLKIT -->
+    <section class="built reveal">
+      <div class="section-head light">
+        <span>06 / THE TOOLKIT</span>
+        <span>BUILT WITH</span>
+      </div>
+      <h2>Built with <em>purpose.</em></h2>
+      <div class="tech-list">
+        <a href="https://www.w3schools.com/python/" target="_blank" rel="noopener noreferrer">🐍 Python 3</a>
+        <a href="https://flask.palletsprojects.com/en/stable/tutorial/" target="_blank" rel="noopener noreferrer">⚡ Flask</a>
+        <a href="https://www.w3schools.com/python/python_ml_getting_started.asp" target="_blank" rel="noopener noreferrer">▦ scikit-learn</a>
+        <a href="https://www.w3schools.com/python/python_ml_linear_regression.asp" target="_blank" rel="noopener noreferrer">◢ TF-IDF</a>
+        <a href="https://www.w3schools.com/python/pandas/default.asp" target="_blank" rel="noopener noreferrer">🐼 pandas</a>
+        <a href="https://www.w3schools.com/python/numpy/default.asp" target="_blank" rel="noopener noreferrer">🔢 NumPy</a>
+        <a href="https://www.w3schools.com/python/matplotlib_intro.asp" target="_blank" rel="noopener noreferrer">📊 Matplotlib</a>
+        <a href="https://www.w3schools.com/python/python_ml_scale.asp" target="_blank" rel="noopener noreferrer">🎨 Seaborn</a>
+        <a href="https://www.w3schools.com/python/python_file_handling.asp" target="_blank" rel="noopener noreferrer">💾 joblib</a>
+        <a href="https://www.w3schools.com/js/js_api_intro.asp" target="_blank" rel="noopener noreferrer">🌐 Wikipedia API</a>
+        <a href="https://www.w3schools.com/xml/xml_rss.asp" target="_blank" rel="noopener noreferrer">📡 Google News RSS</a>
+        <a href="https://www.w3schools.com/python/python_regex.asp" target="_blank" rel="noopener noreferrer">⚙ NLTK</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-rule"></div>
+    <a class="brand" href="#home">Truth<span>Lens</span></a>
+    <p class="quote">“In an age of information, truth is the rarest commodity.”</p>
+    <nav>
+      <a href="#home">HOME</a>
+      <a href="#interactive-how">HOW IT WORKS</a>
+      <a href="#demo">ANALYZE</a>
+      <a href="#batch">BATCH TESTING</a>
+      <a href="#dashboard">PERFORMANCE</a>
+      <a href="#history-section">HISTORY</a>
+    </nav>
+    <small>© AI-Based Fake News Detection & Real-Time Verification Platform.</small>
+    <div class="footer-rule bottom"></div>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+
+</html>

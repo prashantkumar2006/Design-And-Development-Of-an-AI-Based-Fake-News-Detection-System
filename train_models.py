@@ -1,51 +1,29 @@
-"""
-Phase 6: Train Machine Learning Models
-Loads the TF-IDF features from Phase 5, trains three models
-(Logistic Regression, Naive Bayes, SVM), and compares their accuracy.
-"""
+"""Train article and short-title classifiers from Phase 5 TF-IDF features."""
 
 import joblib
-from sklearn.linear_model import LogisticRegression
-from sklearn.naive_bayes import MultinomialNB
 from sklearn.svm import LinearSVC
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 
-# 1. Load the saved TF-IDF data from Phase 5
-X_train = joblib.load("models/X_train_tfidf.pkl")
-X_test = joblib.load("models/X_test_tfidf.pkl")
+
 y_train = joblib.load("models/y_train.pkl")
 y_test = joblib.load("models/y_test.pkl")
+X_train = joblib.load("models/X_train_tfidf.pkl")
+X_test = joblib.load("models/X_test_tfidf.pkl")
+X_short_train = joblib.load("models/X_short_train.pkl")
+X_short_test = joblib.load("models/X_short_test.pkl")
 
-results = {}
 
-# 2. Logistic Regression
-print("Training Logistic Regression...")
-log_reg = LogisticRegression(max_iter=1000)
-log_reg.fit(X_train, y_train)
-results["Logistic Regression"] = accuracy_score(y_test, log_reg.predict(X_test))
-joblib.dump(log_reg, "models/logistic_regression.pkl")
+def fit_report(name, train_x, test_x, output_path):
+    model = LinearSVC(C=0.5, class_weight="balanced", max_iter=5000)
+    model.fit(train_x, y_train)
+    predicted = model.predict(test_x)
+    print(f"\n{name}")
+    print(f"Accuracy: {accuracy_score(y_test, predicted):.4f}")
+    print(classification_report(y_test, predicted, target_names=["Fake", "Real"]))
+    print("Confusion matrix [Fake, Real]:\n", confusion_matrix(y_test, predicted))
+    joblib.dump(model, output_path)
 
-# 3. Naive Bayes
-print("Training Naive Bayes...")
-nb = MultinomialNB()
-nb.fit(X_train, y_train)
-results["Naive Bayes"] = accuracy_score(y_test, nb.predict(X_test))
-joblib.dump(nb, "models/naive_bayes.pkl")
 
-# 4. SVM (linear kernel, well suited to high-dimensional text data)
-print("Training SVM...")
-svm = LinearSVC()
-svm.fit(X_train, y_train)
-results["SVM"] = accuracy_score(y_test, svm.predict(X_test))
-joblib.dump(svm, "models/svm.pkl")
-
-# 5. Compare results
-print("\n" + "=" * 40)
-print("MODEL COMPARISON")
-print("=" * 40)
-for name, acc in sorted(results.items(), key=lambda x: x[1], reverse=True):
-    print(f"{name}: {acc*100:.2f}%")
-
-best = max(results, key=results.get)
-print(f"\nBest model: {best} ({results[best]*100:.2f}% accuracy)")
-print("\nAll models saved to models/ folder.")
+fit_report("Full article model", X_train, X_test, "models/svm.pkl")
+fit_report("Short headline model", X_short_train, X_short_test, "models/short_text_model.pkl")
+print("\nSaved full-article and short-text models.")

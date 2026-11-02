@@ -1,53 +1,58 @@
-"""
-Phase 5: Feature Engineering (TF-IDF)
-Reads data/cleaned_dataset.csv (from Phase 3) and converts the clean_text
-column into numeric TF-IDF vectors, saving the vectorizer and split data
-for Phase 6 (model training).
-"""
+"""Build word and character TF-IDF features for article and short-title models."""
 
-import pandas as pd
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.model_selection import train_test_split
+import re
 import joblib
-import os
+import pandas as pd
+from nltk.corpus import stopwords
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.pipeline import FeatureUnion
+from sklearn.model_selection import StratifiedGroupKFold
 
-os.makedirs("models", exist_ok=True)
 
-# 1. Load cleaned dataset
-df = pd.read_csv("data/cleaned_dataset.csv")
-df["clean_text"] = df["clean_text"].fillna("")
+def clean(text, stops):
+    text = str(text).lower()
+    text = re.sub(r"<.*?>|http\S+|www\S+", " ", text)
+    text = re.sub(r"[^a-z\s]", " ", text)
+    text = re.sub(r"\s+", " ", text).strip()
+    return " ".join(word for word in text.split() if word not in stops)
 
-X = df["clean_text"]
-y = df["label"]
 
-# 2. Split into train and test sets BEFORE vectorizing
-# Why before? To avoid "data leakage" — the vectorizer should only learn
-# vocabulary/statistics from the training set, never peek at test data.
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.2, random_state=42, stratify=y
-)
+df = pd.read_csv("data/combined_dataset.csv").fillna("")
+stops = set(stopwords.words("english"))
+titles = df["title"].map(lambda value: clean(value, stops))
+articles = (df["title"] + " " + df["text"]).map(lambda value: clean(value, stops))
+labels = df["label"].astype(int)
 
-print("Training set size:", X_train.shape[0])
-print("Test set size:", X_test.shape[0])
+groups = titles.str.replace(r"\s+", " ", regex=True).str.strip()
+train_idx, test_idx = next(StratifiedGroupKFold(
+    n_splits=5, shuffle=True, random_state=42
+).split(articles, labels, groups))
 
-# 3. Create the TF-IDF vectorizer
-# max_features limits vocabulary size to the top N most informative words
-# (keeps things fast and avoids overfitting to rare words)
-vectorizer = TfidfVectorizer(max_features=5000, ngram_range=(1, 2))
 
-# 4. Fit on training data ONLY, then transform both train and test
-X_train_tfidf = vectorizer.fit_transform(X_train)
-X_test_tfidf = vectorizer.transform(X_test)
+def make_vectorizer(word_features, char_features):
+    return FeatureUnion([
+        ("word", TfidfVectorizer(max_features=word_features, ngram_range=(1, 2), sublinear_tf=True)),
+        ("char", TfidfVectorizer(max_features=char_features, analyzer="char_wb", ngram_range=(3, 5), sublinear_tf=True)),
+    ])
 
-print("\nTF-IDF matrix shape (train):", X_train_tfidf.shape)
-print("TF-IDF matrix shape (test):", X_test_tfidf.shape)
 
-# 5. Save everything needed for Phase 6
-joblib.dump(vectorizer, "models/tfidf_vectorizer.pkl")
-joblib.dump(X_train_tfidf, "models/X_train_tfidf.pkl")
-joblib.dump(X_test_tfidf, "models/X_test_tfidf.pkl")
-joblib.dump(y_train, "models/y_train.pkl")
-joblib.dump(y_test, "models/y_test.pkl")
+article_vectorizer = make_vectorizer(50000, 50000)
+X_train = article_vectorizer.fit_transform(articles.iloc[train_idx])
+X_test = article_vectorizer.transform(articles.iloc[test_idx])
 
-print("\nSaved vectorizer and train/test splits to models/ folder.")
-print("Ready for Phase 6: Model Training.")
+short_vectorizer = make_vectorizer(30000, 40000)
+X_short_train = short_vectorizer.fit_transform(titles.iloc[train_idx])
+X_short_test = short_vectorizer.transform(titles.iloc[test_idx])
+
+joblib.dump(article_vectorizer, "models/tfidf_vectorizer.pkl")
+joblib.dump(short_vectorizer, "models/short_vectorizer.pkl")
+joblib.dump(X_train, "models/X_train_tfidf.pkl")
+joblib.dump(X_test, "models/X_test_tfidf.pkl")
+joblib.dump(X_short_train, "models/X_short_train.pkl")
+joblib.dump(X_short_test, "models/X_short_test.pkl")
+joblib.dump(labels.iloc[train_idx], "models/y_train.pkl")
+joblib.dump(labels.iloc[test_idx], "models/y_test.pkl")
+joblib.dump(titles.iloc[train_idx], "models/titles_train.pkl")
+joblib.dump(titles.iloc[test_idx], "models/titles_test.pkl")
+print(f"Article features: {X_train.shape[1]:,}; short-text features: {X_short_train.shape[1]:,}")
+print(f"Training rows: {len(train_idx):,}; test rows: {len(test_idx):,}")
